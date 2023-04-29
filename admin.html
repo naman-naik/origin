@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Admin Page</title>
+<style>
+img{
+  width:200px;
+  margin:8px auto auto 20px;
+  border:1px solid black;
+  border-radius:5px;
+}
+#image-container{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-around;
+  align-items:center;
+}
+.item{
+  background:linear-gradient(to bottom, #bbe1fc,#edf3f7);
+  border-radius:10px;
+  width:250px;
+  border:1px solid black;
+  margin:10px 0 5px 10px;
+  padding:10px;
+}
+.filter-class{
+  padding:10px;
+  font-size:20px;
+  font-weight:800;
+}
+.create{
+  padding:10px;
+  font-size:20px;
+  font-weight:800;
+}
+#main{
+  padding:10px;
+  font-size:20px;
+  font-weight:800;
+}
+.main-container{
+  background:linear-gradient(to bottom, #bbe1fc,#edf3f7);
+  padding:15px;
+  border-radius:5px;
+  position:sticky;
+}
+button{
+  background:white;
+  padding:5px 10px;
+  border:1px solid black;
+  border-radius:5px;
+  font-size:18px;
+}
+input{
+  padding:5px;
+  border:1px solid black;
+  border-radius:5px;
+  font-size:15px;
+}
+.filter-class select{
+  font-size:18px;
+}
+select{
+  border-radius:10px;
+  cursor:pointer;
+}
+#error{
+  color:red;
+  font-size:20px;
+  text-align:center;
+}
+input[type="button"]{
+  cursor:pointer;
+}
+
+</style>
+</head>
+<body>
+<div class="main-container">
+<div id="error"></div>
+<div id="main">
+<label>Available Labels Are :</label> 
+<button >Cat</button>
+<button >Dog</button>
+<button >Horse</button>
+</div>
+
+<div class="create">
+<label>Create New Label : </label>
+<input type="text" id="label-name" placeholder="Enter Label Name">
+<input type="button" value="Create" onclick="add()">
+</div>
+
+<div class="filter-class">
+<label>Filter By : </label>
+<select onchange="filter(this.value)" id="changeNone">
+  <option>None</option>
+  <option>Cat</option>
+  <option>Dog</option>
+  <option>Horse</option>
+</select>
+</div>
+
+</div>
+<hr>
+<div id="image-container"></div>
+<script>
+
+function add(){
+  const mainDiv=document.getElementById('main');
+  const change=document.getElementById('changeNone');
+  let x=document.getElementById('label-name');
+  if(x.value==''){
+    document.getElementById('error').innerHTML="Enter the label name";
+  }
+  else{
+    if(change.value!='None'){
+      //change.value='None';
+      filter('None');
+    }
+    document.getElementById('error').innerHTML="";
+    mainDiv.innerHTML+=`<button>${x.value}</button>`;
+    const filterSelect=document.querySelector("select");
+    filterSelect.innerHTML+=`<option>${x.value}</option>`;
+    for(let i=0;i<images.length;i++){
+      const selElement=document.getElementsByClassName(images[i].category+i)[0];
+      selElement.innerHTML+=`<option>${x.value}</option>`;
+    }
+    let y=document.getElementById('error');
+    y.style="color:green";
+    y.innerHTML=`New Label <b>${x.value}</b> is Created Successfully`;
+     
+  }
+}
+
+
+const images = [
+  { url: "cat1.jpg", category: "cat" },
+  { url: "dog2.jpg", category: "dog" },
+  { url: "cat3.jpg", category: "cat" },
+  { url: "horse1.jpg", category: "horse" },
+  { url: "dog1.jpg", category: "dog" },
+  { url: "cat2.jpg", category: "cat" },
+  { url: "cat4.jpg", category: "cat" },
+  { url: "horse3.jpg", category: "horse"},
+  { url: "cat5.jpg", category: "cat" },
+  { url: "dog3.jpg", category: "dog" },
+  { url: "dog4.jpg", category: "dog" },
+  { url: "horse2.jpg", category: "horse" },
+];
+
+displayImages(images);
+
+function displayImages(images) {
+  const container = document.getElementById("image-container");
+  
+  container.innerHTML = ""; // clear previous images
+  
+  for(let i=0;i<images.length;i++){
+    const divElement =document.createElement("div");
+    divElement.className = "item";
+    const labElement = document.createElement("label");
+    labElement.id=images[i].category+i;
+    labElement.innerHTML="Label : "+(images[i].category).toUpperCase();
+    const selElement = document.createElement("select");
+    selElement.className=images[i].category+i;
+    selElement.style="float:right";
+    selElement.onchange=function(){labChange(this.className,this.value);};
+    const op0Element = document.createElement("option");
+    op0Element.innerHTML="Change the label";
+    const op1Element = document.createElement("option");
+    op1Element.innerHTML="Cat";
+    const op2Element = document.createElement("option");
+    op2Element.innerHTML="Dog";
+    const op3Element = document.createElement("option");
+    op3Element.innerHTML="Horse";
+    const brElement = document.createElement("br");
+    const imgElement = document.createElement("img");
+    imgElement.src = images[i].url;
+    imgElement.classList.add(images[i].category); // add category class
+    container.appendChild(divElement);
+    divElement.appendChild(labElement);
+    selElement.appendChild(op0Element);
+    selElement.appendChild(op1Element);
+    selElement.appendChild(op2Element);
+    selElement.appendChild(op3Element);
+    divElement.appendChild(selElement);
+    divElement.appendChild(brElement);
+    divElement.appendChild(imgElement);
+  }
+}
+
+function labChange(name,val){
+  if(val!="Change the label"){
+    let x=document.getElementById(name);
+    x.innerHTML="Label : "+val;
+    images[name[name.length-1]].category=val.toLowerCase();
+  }
+}
+
+function filter(name){
+  if(name === "None"){
+    displayImages(images);
+  }
+  else{
+    const filteredImages = images.filter((image) => image.category === name.toLowerCase());
+    displayImages(filteredImages);
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<title>Login Page</title>
+<style>
+body{
+  background:radial-gradient( #538ffc, #53d2fc, #e9f4f7);
+}
+.container{
+  background:linear-gradient(to bottom, #bbe1fc,#edf3f7);
+  border-radius:5px;
+  border:2px black solid;
+  width:40%;
+  padding:10px 0 50px 0;
+  margin:100px auto auto auto;
+  text-align:center;
+}
+.head{
+  font-weight:700;
+  width:50%;
+  font-size:20px;
+  margin:-10px 0px 30px 0px;
+  padding:15px 0 ;
+}
+.two{
+  float:right;
+  background:white;
+  border-style:none none none solid;
+  border-width:1px;
+}
+.one{
+  background:#bbe1fc;
+  border-style:none solid none none;
+  border-width:1px;
+}
+label{
+  font-size:20px;
+}
+input{
+  width:200px;
+  font-size:18px;
+  padding:5px;
+  margin:15px 0 0 0;
+  border-radius:5px;
+}
+
+#error{
+  margin-top:20px;
+  color:#f5162c;
+  font-size:20px;
+}
+input[value="login"]{
+  width:120px;
+  background:#bbe1fc;
+}
+input[value="login"]:hover{
+  background:#8adaff;
+}
+
+
+@media screen and (max-width:600px){
+  .container{width:80%;}
+}
+@media screen and (min-width:600px) and (max-width:900px){
+  .container{width:60%;}
+}
+
+</style>
+
+</head>
+
+<body>
+<div class="container">
+  <button class="head one" id="one" onclick="user()">User Login</button>  
+  <button class="head two" id="two" onclick="admin()">Admin Login</button>
+  <br>
+  <label for="username" id="label-name">Username : </label>  
+    <input type="text" id="username" value="user"><br><br>
+  <label>Password : </label>  
+    <input type="password" value="originHealth" id="pass"><br><br>
+    <input type="button" value="login" onclick="verify()">
+<div id="error"></div>
+</div>
+
+<script>
+function verify(){
+  var x=document.getElementById("username").value;
+  var y=document.getElementById("pass").value;
+  if(x=="user" && y=="originHealth"){
+    window.location.replace('user.html','_self');
+  }
+  else if(x=="admin" && y=="originHealth"){
+    window.location.replace('admin.html','_self');
+  }
+  else{
+    document.getElementById("error").innerHTML="Enter Correct Username and Password";
+    //document.getElementById("username").style='border-color:red';
+  }
+}
+  
+
+function user(){
+  document.getElementById("username").value="user";
+  document.getElementById("label-name").innerHTML="Username : ";
+  document.getElementById("one").style='background:#bbe1fc';
+  document.getElementById("two").style='background:white';
+}  
+
+function admin(){
+  document.getElementById("username").value="admin";
+  document.getElementById("label-name").innerHTML="Admin ID : ";
+  document.getElementById("one").style='background:white';
+  document.getElementById("two").style='background:#bbe1fc';
+}
+
+</script>
+</body>
+</html>
