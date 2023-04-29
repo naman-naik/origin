@@ -89,10 +89,10 @@ function verify(){
   var x=document.getElementById("username").value;
   var y=document.getElementById("pass").value;
   if(x=="user" && y=="originHealth"){
-    window.location.replace('user.html','_self');
+    window.open('user.html','_self');
   }
   else if(x=="admin" && y=="originHealth"){
-    window.location.replace('admin.html','_self');
+    window.open('admin.html','_self');
   }
   else{
     document.getElementById("error").innerHTML="Enter Correct Username and Password";
