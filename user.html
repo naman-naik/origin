@@ -77,7 +77,7 @@ displayImages(images);
 function displayImages(images) {
   const container = document.getElementById("image-container");
   
-  container.innerHTML = ""; // clear previous images
+  container.innerHTML = ""; 
   
   for(let i=0;i<images.length;i++){
     const divElement =document.createElement("div");
@@ -100,7 +100,7 @@ function displayImages(images) {
     const brElement = document.createElement("br");
     const imgElement = document.createElement("img");
     imgElement.src = images[i].url;
-    imgElement.classList.add(images[i].category); // add category class
+    imgElement.classList.add(images[i].category); 
     container.appendChild(divElement);
     divElement.appendChild(labElement);
     selElement.appendChild(op0Element);
