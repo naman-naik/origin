@@ -114,6 +114,7 @@ function add(){
   let x=document.getElementById('label-name');
   if(x.value==''){
     document.getElementById('error').innerHTML="Enter the label name";
+    document.getElementById('error').style="color:red";
   }
   else{
     if(change.value!='None'){
